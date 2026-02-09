@@ -1,22 +1,19 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { ENV } from "../../../config/env";
+import LoginPage from "@pages/loginPage";
+import AddEmployeePage from "@pages/addEmployeePage";
+import { getRandomEmployeeDetails } from "@e2e/testdata/random";
 
-test("Add employee from PIM", async ({ page }) => {
+test("Add Employee", async ({ page }) => {
   await page.goto(ENV.URL);
-  await page.getByRole("textbox", { name: "Username" }).click();
-  await page.getByRole("textbox", { name: "Username" }).fill(ENV.USERNAME);
-  await page.getByRole("textbox", { name: "Password" }).click();
-  await page.getByRole("textbox", { name: "Password" }).fill(ENV.PASSWORD);
-  await page.getByRole("button", { name: "Login" }).click();
-  await page.getByRole("link", { name: "PIM" }).click();
-  await page.getByRole("button", { name: "Add" }).click();
-  await page.getByRole("textbox", { name: "First Name" }).click();
-  await page.getByRole("textbox", { name: "First Name" }).fill("Sandy");
-  await page.getByRole("textbox", { name: "First Name" }).press("Tab");
-  await page.getByRole("textbox", { name: "Middle Name" }).fill("V");
-  await page.getByRole("textbox", { name: "Middle Name" }).press("Tab");
-  await page.getByRole("textbox", { name: "Last Name" }).fill("P");
-  await page.getByRole("button", { name: "Save" }).click();
-  await page.getByText(/Successfully Saved/i).click();
-  await expect(page.getByText(/Successfully Savedx/i)).toBeVisible();
+  const loginPage = new LoginPage(page);
+  const homePage = await loginPage.login(ENV.USERNAME, ENV.PASSWORD);
+
+  await homePage.getLeftMenuComponent().selectLeftMenuItem("PIM");
+  await homePage.getTopMenuComponent().selectTopMenuItem("Add Employee");
+
+  const addEmployeePage = new AddEmployeePage(page);
+  await addEmployeePage.addEmployee(getRandomEmployeeDetails());
+
+  await expect(addEmployeePage.successMessage).toBeVisible();
 });

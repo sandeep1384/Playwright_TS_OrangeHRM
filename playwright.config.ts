@@ -1,5 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 
 // Load environment file
 if (process.env.Environment) {

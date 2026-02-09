@@ -1,5 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
+import { defineConfig, devices } from "@playwright/test";
+import dotenv from "dotenv";
 
 // Load environment file
 if (process.env.Environment) {
@@ -13,21 +13,21 @@ if (process.env.Environment) {
 }
 
 export default defineConfig({
-  testDir: './e2e/tests',
+  testDir: "./e2e/tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
 
   use: {
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
 });

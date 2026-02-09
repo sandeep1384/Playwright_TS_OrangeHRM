@@ -1,4 +1,4 @@
-const requireEnv = (name: 'URL' | 'USERNAME' | 'PASSWORD'): string => {
+const requireEnv = (name: "URL" | "USERNAME" | "PASSWORD"): string => {
   const value = process.env[name];
   if (!value) {
     throw new Error(`Missing environment variable: ${name}`);
@@ -7,7 +7,7 @@ const requireEnv = (name: 'URL' | 'USERNAME' | 'PASSWORD'): string => {
 };
 
 export const ENV = {
-  URL: requireEnv('URL'),
-  USERNAME: requireEnv('USERNAME'),
-  PASSWORD: requireEnv('PASSWORD'),
+  URL: requireEnv("URL"),
+  USERNAME: requireEnv("USERNAME"),
+  PASSWORD: requireEnv("PASSWORD"),
 };
